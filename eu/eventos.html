@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="eu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Erandio Turismo - Ekitaldiak</title>
+<meta name="description" content="Ezagutu Erandioko kultur agenda eta herriko jaiak: ekitaldiak, tradizioak eta ospakizunak urte osoan zehar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="mini-top-bar">
+  <div class="lang-switch">
+    <button class="lang-btn" data-lang="es">ES</button>
+    <button class="lang-btn active" data-lang="eu">EU</button>
+  </div>
+</div>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <img src="../img/logo-turismoa.png" alt="Erandio Turismo" onerror="this.parentNode.innerHTML='<span class=logo-text>Erandio<small class=logo-sub>Turismoa</small></span>'">
+    </a>
+    <button class="nav-toggle" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav">
+      <a href="index.html"><span class="lang-es">Inicio</span><span class="lang-eu">Hasiera</span></a>
+      <a href="patrimonio.html"><span class="lang-es">Patrimonio</span><span class="lang-eu">Ondarea</span></a>
+      <a href="rutas.html"><span class="lang-es">Rutas y planes</span><span class="lang-eu">Ibilbideak eta planak</span></a>
+      <div class="nav-item">
+        <a href="ocio.html"><span class="lang-es">Ocio</span><span class="lang-eu">Aisialdia</span> <span class="dropdown-arrow">▼</span></a>
+        <div class="dropdown">
+          <a href="donde-comer.html"><span class="lang-es">Dónde comer</span><span class="lang-eu">Non jan</span></a>
+          <a href="donde-dormir.html"><span class="lang-es">Dónde dormir</span><span class="lang-eu">Non lo egin</span></a>
+          <a href="donde-comprar.html"><span class="lang-es">Dónde comprar</span><span class="lang-eu">Non erosi</span></a>
+        </div>
+      </div>
+      <a href="eventos.html" class="active"><span class="lang-es">Eventos</span><span class="lang-eu">Ekitaldiak</span></a>
+      <a href="como-llegar.html"><span class="lang-es">Cómo llegar</span><span class="lang-eu">Nola iritsi</span></a>
+      <a href="contacto.html"><span class="lang-es">Contacto</span><span class="lang-eu">Kontaktua</span></a>
+    </nav>
+  </div>
+</header>
+
+<nav class="breadcrumb">
+  <a href="index.html"><span class="lang-es">Inicio</span><span class="lang-eu">Hasiera</span></a>
+  <span class="breadcrumb-sep">›</span>
+  <span class="current"><span class="lang-es">Eventos</span><span class="lang-eu">Ekitaldiak</span></span>
+</nav>
+
+<section class="section" id="eventos">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title-es">Eventos y fiestas locales</h2>
+      <h2 class="section-title-eu">Ekitaldiak eta herriko jaiak</h2>
+      <div class="section-divider"></div>
+      <p class="lang-es">No te pierdas la agenda cultural y festiva de Erandio</p>
+      <p class="lang-eu">Ez galdu Erandioko agenda kultural eta jaietakoa</p>
+    </div>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="tab-eventos"><span class="lang-es">Eventos</span><span class="lang-eu">Ekitaldiak</span></button>
+      <button class="tab-btn" data-tab="tab-fiestas"><span class="lang-es">Fiestas locales</span><span class="lang-eu">Herriko jaiak</span></button>
+    </div>
+    <div id="tab-eventos" class="tab-content active"><div id="eventos-cards"></div></div>
+    <div id="tab-fiestas" class="tab-content"><div id="fiestas-cards"></div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>Erandio Turismo</h4>
+      <p class="lang-es">Descubre Erandio, un municipio con encanto en el corazón de Bizkaia.</p>
+      <p class="lang-eu">Ezagutu Erandio, Bizkaiko bihotzean kokatutako udalerri xarmagarria.</p>
+    </div>
+    <div class="footer-col">
+      <h4 class="lang-es">Enlaces</h4>
+      <h4 class="lang-eu">Estekak</h4>
+      <a href="index.html"><span class="lang-es">Inicio</span><span class="lang-eu">Hasiera</span></a><br>
+      <a href="patrimonio.html"><span class="lang-es">Patrimonio</span><span class="lang-eu">Ondarea</span></a><br>
+      <a href="ocio.html"><span class="lang-es">Ocio</span><span class="lang-eu">Aisialdia</span></a><br>
+      <a href="eventos.html"><span class="lang-es">Eventos</span><span class="lang-eu">Ekitaldiak</span></a><br>
+      <a href="contacto.html"><span class="lang-es">Contacto</span><span class="lang-eu">Kontaktua</span></a>
+    </div>
+    <div class="footer-col">
+      <h4 class="lang-es">Contacto</h4>
+      <h4 class="lang-eu">Kontaktua</h4>
+      <p>turismoa@erandio.eus</p>
+      <p>+34 944 52 10 00</p>
+    </div>
+    <div class="footer-col">
+      <h4 class="lang-es">Ayuntamiento de Erandio</h4>
+      <h4 class="lang-eu">Erandioko Udala</h4>
+      <a href="https://www.erandio.eus" target="_blank" rel="noopener">erandio.eus</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 Erandio Turismo. <span class="lang-es">Todos los derechos reservados.</span><span class="lang-eu">Eskubide guztiak erreserbatuta.</span></p>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

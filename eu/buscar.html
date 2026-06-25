@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="eu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Erandio Turismo - Bilatu</title>
+<meta name="description" content="Bilatu Erandioko turismo-edukiak.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="mini-top-bar">
+  <div class="lang-switch">
+    <button class="lang-btn" data-lang="es">ES</button>
+    <button class="lang-btn active" data-lang="eu">EU</button>
+  </div>
+</div>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <img src="../img/logo-turismoa.png" alt="Erandio Turismo" onerror="this.parentNode.innerHTML='<span class=logo-text>Erandio<small class=logo-sub>Turismoa</small></span>'">
+    </a>
+    <button class="nav-toggle" aria-label="MenÃº">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav">
+      <a href="index.html"><span class="lang-es">Inicio</span><span class="lang-eu">Hasiera</span></a>
+      <a href="patrimonio.html"><span class="lang-es">Patrimonio</span><span class="lang-eu">Ondarea</span></a>
+      <a href="rutas.html"><span class="lang-es">Rutas y planes</span><span class="lang-eu">Ibilbideak eta planak</span></a>
+      <div class="nav-item">
+        <a href="ocio.html"><span class="lang-es">Ocio</span><span class="lang-eu">Aisialdia</span> <span class="dropdown-arrow">â–¼</span></a>
+        <div class="dropdown">
+          <a href="donde-comer.html"><span class="lang-es">DÃ³nde comer</span><span class="lang-eu">Non jan</span></a>
+          <a href="donde-dormir.html"><span class="lang-es">DÃ³nde dormir</span><span class="lang-eu">Non lo egin</span></a>
+          <a href="donde-comprar.html"><span class="lang-es">DÃ³nde comprar</span><span class="lang-eu">Non erosi</span></a>
+        </div>
+      </div>
+      <a href="eventos.html"><span class="lang-es">Eventos</span><span class="lang-eu">Ekitaldiak</span></a>
+      <a href="como-llegar.html"><span class="lang-es">CÃ³mo llegar</span><span class="lang-eu">Nola iritsi</span></a>
+      <a href="contacto.html"><span class="lang-es">Contacto</span><span class="lang-eu">Kontaktua</span></a>
+    </nav>
+  </div>
+</header>
+
+<section class="search-section">
+  <div class="container">
+    <div class="search-input-wrap">
+      <svg class="search-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      <input type="text" id="search-input" class="search-input" placeholder="Bilatu Erandio Turismoan..." autofocus>
+    </div>
+    <div id="search-results-count" class="search-results-count"></div>
+    <div id="search-results" class="search-results"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>Erandio Turismo</h4>
+      <p class="lang-es">Descubre Erandio, un municipio con encanto en el corazÃ³n de Bizkaia.</p>
+      <p class="lang-eu">Ezagutu Erandio, Bizkaiko bihotzean kokatutako udalerri xarmagarria.</p>
+    </div>
+    <div class="footer-col">
+      <h4 class="lang-es">Enlaces</h4>
+      <h4 class="lang-eu">Estekak</h4>
+      <a href="index.html"><span class="lang-es">Inicio</span><span class="lang-eu">Hasiera</span></a><br>
+      <a href="patrimonio.html"><span class="lang-es">Patrimonio</span><span class="lang-eu">Ondarea</span></a><br>
+      <a href="ocio.html"><span class="lang-es">Ocio</span><span class="lang-eu">Aisialdia</span></a><br>
+      <a href="eventos.html"><span class="lang-es">Eventos</span><span class="lang-eu">Ekitaldiak</span></a><br>
+      <a href="contacto.html"><span class="lang-es">Contacto</span><span class="lang-eu">Kontaktua</span></a>
+    </div>
+    <div class="footer-col">
+      <h4 class="lang-es">Contacto</h4>
+      <h4 class="lang-eu">Kontaktua</h4>
+      <p>turismoa@erandio.eus</p>
+      <p>+34 944 52 10 00</p>
+    </div>
+    <div class="footer-col">
+      <h4 class="lang-es">Ayuntamiento de Erandio</h4>
+      <h4 class="lang-eu">Erandioko Udala</h4>
+      <a href="https://www.erandio.eus" target="_blank" rel="noopener">erandio.eus</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 Erandio Turismo. <span class="lang-es">Todos los derechos reservados.</span><span class="lang-eu">Eskubide guztiak erreserbatuta.</span></p>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script>
+(function () {
+  var input = document.getElementById('search-input');
+  var resultsContainer = document.getElementById('search-results');
+  var countContainer = document.getElementById('search-results-count');
+  if (!input) return;
+
+  function renderSearchResults(query) {
+    var results = performSearch(query);
+    if (!results.length) {
+      countContainer.textContent = '';
+      resultsContainer.innerHTML = '<div class="search-empty"><p class="lang-es">No se encontraron resultados para <strong>"' + escapeHtml(query) + '"</strong></p><p class="lang-eu">Ez da emaitzarik aurkitu <strong>"' + escapeHtml(query) + '"</strong>-rentzat</p></div>';
+      return;
+    }
+    var lang = currentLang;
+    var suffix = lang === 'eu' ? '_eu' : '_es';
+    var catLabels = {
+      patrimonio: { es: 'Patrimonio', eu: 'Ondarea' },
+      rutas: { es: 'Rutas y planes', eu: 'Ibilbideak eta planak' },
+      'donde-comer': { es: 'DÃ³nde comer', eu: 'Non jan' },
+      'donde-dormir': { es: 'DÃ³nde dormir', eu: 'Non lo egin' },
+      'donde-comprar': { es: 'DÃ³nde comprar', eu: 'Non erosi' },
+      eventos: { es: 'Eventos', eu: 'Ekitaldiak' },
+      fiestas: { es: 'Fiestas', eu: 'Jaiak' }
+    };
+    var detallePage = lang === 'eu' ? 'eu/patrimonio-detalle.html?cat=' : 'patrimonio-detalle.html?cat=';
+    var count = lang === 'eu' ? results.length + ' emaitza aurkitu dira' : results.length + ' resultado' + (results.length === 1 ? '' : 's') + ' encontrado' + (results.length === 1 ? '' : 's');
+    countContainer.textContent = count;
+    var html = '';
+    results.forEach(function (r) {
+      var item = r.item;
+      var cat = r.category;
+      var title = item['title' + suffix] || item.title_es;
+      var desc = (item['resumen' + suffix] || item.resumen_es || '');
+      var plainDesc = desc.replace(/<[^>]+>/g, '').substring(0, 200);
+      var img = item.images && item.images.length ? item.images[0] : (item.image || '');
+      var label = catLabels[cat] ? catLabels[cat][lang === 'eu' ? 'eu' : 'es'] : cat;
+      html += '<a href="' + detallePage + cat + '&id=' + item.id + '" class="search-result-item">' +
+        (img ? '<img src="' + img + '" alt="' + escapeHtml(title) + '" loading="lazy">' : '<div style="width:120px;height:80px;background:#f0f0f0;border-radius:8px;flex-shrink:0"></div>') +
+        '<div class="search-result-info">' +
+        '<div class="search-result-cat">' + label + '</div>' +
+        '<h3>' + escapeHtml(title) + '</h3>' +
+        (plainDesc ? '<p class="search-result-desc">' + escapeHtml(plainDesc) + '</p>' : '') +
+        '</div></a>';
+    });
+    resultsContainer.innerHTML = html;
+  }
+
+  input.addEventListener('input', function () {
+    var q = input.value.trim();
+    if (!q) {
+      resultsContainer.innerHTML = '';
+      countContainer.textContent = '';
+      return;
+    }
+    renderSearchResults(q);
+  });
+})();
+</script>
+</body>
+</html>

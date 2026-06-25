@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Erandio Turismo - Inicio</title>
+<meta name="description" content="Descubre Erandio: turismo, patrimonio, rutas, gastronomía y eventos en el corazón de Bizkaia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="mini-top-bar">
+  <div class="lang-switch">
+    <button class="lang-btn active" data-lang="es">ES</button>
+    <button class="lang-btn" data-lang="eu">EU</button>
+  </div>
+</div>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <img src="img/logo-turismoa.png" alt="Erandio Turismo" onerror="this.parentNode.innerHTML='<span class=logo-text>Erandio<small class=logo-sub>Turismoa</small></span>'">
+    </a>
+    <button class="nav-toggle" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav">
+      <a href="index.html" class="active"><span class="lang-es">Inicio</span><span class="lang-eu">Hasiera</span></a>
+      <a href="patrimonio.html"><span class="lang-es">Patrimonio</span><span class="lang-eu">Ondarea</span></a>
+      <a href="rutas.html"><span class="lang-es">Rutas y planes</span><span class="lang-eu">Ibilbideak eta planak</span></a>
+      <div class="nav-item">
+        <a href="ocio.html"><span class="lang-es">Ocio</span><span class="lang-eu">Aisialdia</span> <span class="dropdown-arrow">▼</span></a>
+        <div class="dropdown">
+          <a href="donde-comer.html"><span class="lang-es">Dónde comer</span><span class="lang-eu">Non jan</span></a>
+          <a href="donde-dormir.html"><span class="lang-es">Dónde dormir</span><span class="lang-eu">Non lo egin</span></a>
+          <a href="donde-comprar.html"><span class="lang-es">Dónde comprar</span><span class="lang-eu">Non erosi</span></a>
+        </div>
+      </div>
+      <a href="eventos.html"><span class="lang-es">Eventos</span><span class="lang-eu">Ekitaldiak</span></a>
+      <a href="como-llegar.html"><span class="lang-es">Cómo llegar</span><span class="lang-eu">Nola iritsi</span></a>
+      <a href="contacto.html"><span class="lang-es">Contacto</span><span class="lang-eu">Kontaktua</span></a>
+    </nav>
+  </div>
+</header>
+
+<!-- ===== HERO SLIDER ===== -->
+<div class="hero-slider" id="heroSlider">
+  <div class="slide active" style="background-image: url('img/Iglesia Andra Mari.jpg');">
+    <div class="slide-overlay">
+      <div class="slide-content">
+        <h1 class="lang-es">Descubre Erandio</h1>
+        <h1 class="lang-eu">Ezagutu Erandio</h1>
+        <p class="lang-es">Naturaleza, historia y tradición a orillas del Nervión. Un municipio con encanto en el corazón de Bizkaia.</p>
+        <p class="lang-eu">Natura, historia eta tradizioa Nervión ibaiaren ertzean. Bizkaiko bihotzean kokatutako udalerri xarmagarria.</p>
+        <a href="patrimonio.html" class="hero-btn lang-es">Explorar</a>
+        <a href="patrimonio.html" class="hero-btn lang-eu">Arakatu</a>
+      </div>
+    </div>
+  </div>
+  <div class="slide" style="background-image: url('img/Ribera de Axpe.jpg');">
+    <div class="slide-overlay">
+      <div class="slide-content">
+        <h1 class="lang-es">Ribera de Axpe</h1>
+        <h1 class="lang-eu">Axpeko Erribera</h1>
+        <p class="lang-es">Paseos junto al Nervión, donde la naturaleza y la tranquilidad te esperan.</p>
+        <p class="lang-eu">Nervión ibaiaren ondoan paseoak, naturak eta lasaitasunak zain dituzu.</p>
+        <a href="rutas.html" class="hero-btn lang-es">Ver rutas</a>
+        <a href="rutas.html" class="hero-btn lang-eu">Ibilbideak ikusi</a>
+      </div>
+    </div>
+  </div>
+  <div class="slide" style="background-image: url('img/Hípica Gohierri.jpg');">
+    <div class="slide-overlay">
+      <div class="slide-content">
+        <h1 class="lang-es">Hípica Gohierri</h1>
+        <h1 class="lang-eu">Gohierri Hipika</h1>
+        <p class="lang-es">Disfruta de la naturaleza a caballo en pleno corazón de Erandio.</p>
+        <p class="lang-eu">Gozatu naturatzen zaldi gainean Erandioko bihotzean.</p>
+        <a href="ocio.html" class="hero-btn lang-es">Ver ocio</a>
+        <a href="ocio.html" class="hero-btn lang-eu">Aisialdia ikusi</a>
+      </div>
+    </div>
+  </div>
+  <div class="slide" style="background-image: url('img/Torre de Martiartu.jpg');">
+    <div class="slide-overlay">
+      <div class="slide-content">
+        <h1 class="lang-es">Torre de Martiartu</h1>
+        <h1 class="lang-eu">Martiartu Dorrea</h1>
+        <p class="lang-es">Testigo del pasado medieval de Erandio. Un símbolo de nuestra historia.</p>
+        <p class="lang-eu">Erandioko iragan gotortuaren lekukoa. Gure historiaren ikurra.</p>
+        <a href="patrimonio.html" class="hero-btn lang-es">Ver patrimonio</a>
+        <a href="patrimonio.html" class="hero-btn lang-eu">Ondarea ikusi</a>
+      </div>
+    </div>
+  </div>
+  <div class="slide" style="background-image: url('img/Caserío Ibarrondo.jpg');">
+    <div class="slide-overlay">
+      <div class="slide-content">
+        <h1 class="lang-es">Caserío Ibarrondo</h1>
+        <h1 class="lang-eu">Ibarrondo Baserria</h1>
+        <p class="lang-es">Arquitectura rural vasca del siglo XVII, conservada para las futuras generaciones.</p>
+        <p class="lang-eu">XVII. mendeko euskal baserri arkitektura, etorkizuneko belaunaldientzat gordea.</p>
+        <a href="patrimonio.html" class="hero-btn lang-es">Descubrir</a>
+        <a href="patrimonio.html" class="hero-btn lang-eu">Ezagutu</a>
+      </div>
+    </div>
+  </div>
+  <div class="slide" style="background-image: url('img/Parque de Akarlanda.jpg');">
+    <div class="slide-overlay">
+      <div class="slide-content">
+        <h1 class="lang-es">Parque de Akarlanda</h1>
+        <h1 class="lang-eu">Akarlandako Parkea</h1>
+        <p class="lang-es">Amplias zonas verdes, juegos infantiles y áreas de picnic para toda la familia.</p>
+        <p class="lang-eu">Gune berde zabalak, haur jolasak eta piknik guneak familia osoarentzat.</p>
+        <a href="ocio.html" class="hero-btn lang-es">Ver ocio</a>
+        <a href="ocio.html" class="hero-btn lang-eu">Aisialdia ikusi</a>
+      </div>
+    </div>
+  </div>
+  <div class="slider-dots" id="sliderDots"></div>
+</div>
+
+<!-- ===== VIDEO ===== -->
+<section class="video-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="lang-es">Erandio en vídeo</h2>
+      <h2 class="lang-eu">Erandio bideoan</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="video-wrapper">
+      <iframe src="https://www.youtube.com/embed/8P7h6TFCNR8" title="Erandio Promocional" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRESENTACIÓN ===== -->
+<section class="presentation">
+  <div class="container">
+    <h2 class="lang-es">Erandio: Tradición, industria y vanguardia</h2>
+    <h2 class="lang-eu">Erandio: Tradizioa, industria eta abangoardia</h2>
+    <div class="section-divider"></div>
+    <p class="lang-es">Conoce Erandio y déjate llevar por este pueblo singular en el que se combina la vida urbana e industrial con la belleza de sus parajes rurales. Situado en pleno corazón de la ría del Nervión, a medio camino entre Bilbao y la costa, puedes sumergirte en su pasado industrial, con sus excelentes vistas a la ría del Nervión, así como en su entorno más rural, donde poder admirar antiguas casas torre, caseríos centenarios y diversos edificios religiosos.</p>
+    <p class="lang-eu">Ezagutu Erandio eta utzi eramaten herri berezi honetan, non hiri eta industria bizitza bere paraje naturalen edertasunarekin uztartzen den. Nervión itsasadarraren bihotzean kokatua, Bilbo eta kostaren arteko bide erdian, bere industria iraganean murgil zaitezke, Nervión itsasadarraren bista bikainekin, baita bere ingurune nekazaritzan ere, non dorre etxe zaharrak, mende askoko baserriak eta erlijio eraikin anitzak miretsi ditzakezun.</p>
+  </div>
+</section>
+
+<!-- ===== LOGO LINKS ===== -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="lang-es">Descubre Erandio</h2>
+      <h2 class="lang-eu">Ezagutu Erandio</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="logo-links">
+      <a href="https://www.google.com/maps/place/Ayuntamiento+de+Erandio/@43.3028828,-2.9753765,3174m/data=!3m1!1e3!4m6!3m5!1s0xd4e5a884c88a019:0x5a7c8e48b51616fb!8m2!3d43.302937!4d-2.9753989!16s%2Fg%2F1tlkdpc1?entry=ttu&g_ep=EgoyMDI2MDMxNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener" class="logo-link-card">
+        <div class="link-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        </div>
+        <h3 class="lang-es">Localización</h3>
+        <h3 class="lang-eu">Kokapena</h3>
+        <p class="lang-es">Encuentra Erandio en el mapa</p>
+        <p class="lang-eu">Aurkitu Erandio mapan</p>
+      </a>
+      <a href="https://www.erandiokogida.com/cas/site/calles-ver.asp" target="_blank" rel="noopener" class="logo-link-card">
+        <div class="link-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+        </div>
+        <h3 class="lang-es">Callejero</h3>
+        <h3 class="lang-eu">Kalezkoa</h3>
+        <p class="lang-es">Consulta las calles de Erandio</p>
+        <p class="lang-eu">Kontsultatu Erandioko kaleak</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>Erandio Turismo</h4>
+      <p class="lang-es">Descubre Erandio, un municipio con encanto en el corazón de Bizkaia.</p>
+      <p class="lang-eu">Ezagutu Erandio, Bizkaiko bihotzean kokatutako udalerri xarmagarria.</p>
+    </div>
+    <div class="footer-col">
+      <h4 class="lang-es">Enlaces</h4>
+      <h4 class="lang-eu">Estekak</h4>
+      <a href="index.html"><span class="lang-es">Inicio</span><span class="lang-eu">Hasiera</span></a><br>
+      <a href="patrimonio.html"><span class="lang-es">Patrimonio</span><span class="lang-eu">Ondarea</span></a><br>
+      <a href="ocio.html"><span class="lang-es">Ocio</span><span class="lang-eu">Aisialdia</span></a><br>
+      <a href="eventos.html"><span class="lang-es">Eventos</span><span class="lang-eu">Ekitaldiak</span></a><br>
+      <a href="contacto.html"><span class="lang-es">Contacto</span><span class="lang-eu">Kontaktua</span></a>
+    </div>
+    <div class="footer-col">
+      <h4 class="lang-es">Contacto</h4>
+      <h4 class="lang-eu">Kontaktua</h4>
+      <p>turismoa@erandio.eus</p>
+      <p>+34 944 52 10 00</p>
+    </div>
+    <div class="footer-col">
+      <h4 class="lang-es">Ayuntamiento de Erandio</h4>
+      <h4 class="lang-eu">Erandioko Udala</h4>
+      <a href="https://www.erandio.eus" target="_blank" rel="noopener">erandio.eus</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 Erandio Turismo. <span class="lang-es">Todos los derechos reservados.</span><span class="lang-eu">Eskubide guztiak erreserbatuta.</span></p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+(function() {
+  var slides = document.querySelectorAll('#heroSlider .slide');
+  var dotsContainer = document.getElementById('sliderDots');
+  if (!slides.length) return;
+  var current = 0;
+  var interval;
+
+  // Create dots
+  slides.forEach(function(_, i) {
+    var dot = document.createElement('div');
+    dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', function() { goTo(i); });
+    dotsContainer.appendChild(dot);
+  });
+  var dots = dotsContainer.querySelectorAll('.slider-dot');
+
+  function goTo(index) {
+    slides.forEach(function(s) { s.classList.remove('active'); });
+    dots.forEach(function(d) { d.classList.remove('active'); });
+    slides[index].classList.add('active');
+    dots[index].classList.add('active');
+    current = index;
+    resetInterval();
+  }
+
+  function next() { goTo((current + 1) % slides.length); }
+
+  function resetInterval() {
+    clearInterval(interval);
+    interval = setInterval(next, 5000);
+  }
+
+  resetInterval();
+})();
+</script>
+</body>
+</html>
