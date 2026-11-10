@@ -116,7 +116,7 @@
       eventos: { es: 'Eventos', eu: 'Ekitaldiak' },
       fiestas: { es: 'Fiestas', eu: 'Jaiak' }
     };
-    var detallePage = lang === 'eu' ? 'eu/patrimonio-detalle.html?cat=' : 'patrimonio-detalle.html?cat=';
+    var detallePage = 'patrimonio-detalle.html?cat=';
     var count = lang === 'eu' ? results.length + ' emaitza aurkitu dira' : results.length + ' resultado' + (results.length === 1 ? '' : 's') + ' encontrado' + (results.length === 1 ? '' : 's');
     countContainer.textContent = count;
     var html = '';
@@ -129,7 +129,7 @@
       var img = item.images && item.images.length ? item.images[0] : (item.image || '');
       var label = catLabels[cat] ? catLabels[cat][lang === 'eu' ? 'eu' : 'es'] : cat;
       html += '<a href="' + detallePage + cat + '&id=' + item.id + '" class="search-result-item">' +
-        (img ? '<img src="' + img + '" alt="' + escapeHtml(title) + '" loading="lazy">' : '<div style="width:120px;height:80px;background:#f0f0f0;border-radius:8px;flex-shrink:0"></div>') +
+        (img ? '<img src="' + escapeHtml(resolveMediaPath(img)) + '" alt="' + escapeHtml(title) + '" loading="lazy">' : '<div style="width:120px;height:80px;background:#f0f0f0;border-radius:8px;flex-shrink:0"></div>') +
         '<div class="search-result-info">' +
         '<div class="search-result-cat">' + label + '</div>' +
         '<h3>' + escapeHtml(title) + '</h3>' +
@@ -147,6 +147,11 @@
       return;
     }
     renderSearchResults(q);
+  });
+
+  document.addEventListener('erandio-content-loaded', function () {
+    var q = input.value.trim();
+    if (q) renderSearchResults(q);
   });
 })();
 </script>

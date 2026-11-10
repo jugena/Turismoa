@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="eu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Erandio Turismo</title>
+<meta name="description" content="Ezagutu Erandioko ondare historiko eta kulturala.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="mini-top-bar">
+  <div class="lang-switch">
+    <button class="lang-btn" data-lang="es">ES</button>
+    <button class="lang-btn active" data-lang="eu">EU</button>
+  </div>
+</div>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index_eu.html" class="logo">
+      <img src="img/logo-turismoa.png" alt="Erandio Turismo" onerror="this.parentNode.innerHTML='<span class=logo-text>Erandio<small class=logo-sub>Turismoa</small></span>'">
+    </a>
+    <button class="nav-toggle" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav">
+      <a href="index_eu.html"><span class="lang-es">Inicio</span><span class="lang-eu">Hasiera</span></a>
+      <a href="patrimonio_eu.html" data-nav="patrimonio"><span class="lang-es">Patrimonio</span><span class="lang-eu">Ondarea</span></a>
+      <a href="rutas_eu.html"><span class="lang-es">Rutas y planes</span><span class="lang-eu">Ibilbideak eta planak</span></a>
+      <div class="nav-item">
+        <a href="ocio_eu.html"><span class="lang-es">Ocio</span><span class="lang-eu">Aisialdia</span> <span class="dropdown-arrow">▼</span></a>
+        <div class="dropdown">
+          <a href="donde-comer_eu.html"><span class="lang-es">Dónde comer</span><span class="lang-eu">Non jan</span></a>
+          <a href="donde-dormir_eu.html"><span class="lang-es">Dónde dormir</span><span class="lang-eu">Non lo egin</span></a>
+          <a href="donde-comprar_eu.html"><span class="lang-es">Dónde comprar</span><span class="lang-eu">Non erosi</span></a>
+        </div>
+      </div>
+      <a href="eventos_eu.html"><span class="lang-es">Eventos</span><span class="lang-eu">Ekitaldiak</span></a>
+      <a href="como-llegar_eu.html"><span class="lang-es">Cómo llegar</span><span class="lang-eu">Nola iritsi</span></a>
+      <a href="contacto_eu.html"><span class="lang-es">Contacto</span><span class="lang-eu">Kontaktua</span></a>
+    </nav>
+  </div>
+</header>
+
+<nav class="breadcrumb" id="detalle-breadcrumb"></nav>
+
+<section class="detalle-section">
+  <div class="container">
+    <div id="detalle-content"></div>
+  </div>
+</section>
+
+<section class="faldon-section">
+  <div class="container">
+    <h3 class="lang-es">Descubre también</h3>
+    <h3 class="lang-eu">Ezagutu ere</h3>
+    <div id="faldon-cards" class="faldon-grid"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h4>Erandio Turismo</h4>
+      <p class="lang-es">Descubre Erandio, un municipio con encanto en el corazón de Bizkaia.</p>
+      <p class="lang-eu">Ezagutu Erandio, Bizkaiko bihotzean kokatutako udalerri xarmagarria.</p>
+    </div>
+    <div class="footer-col">
+      <h4 class="lang-es">Enlaces</h4>
+      <h4 class="lang-eu">Estekak</h4>
+      <a href="index_eu.html"><span class="lang-es">Inicio</span><span class="lang-eu">Hasiera</span></a><br>
+      <a href="patrimonio_eu.html"><span class="lang-es">Patrimonio</span><span class="lang-eu">Ondarea</span></a><br>
+      <a href="ocio_eu.html"><span class="lang-es">Ocio</span><span class="lang-eu">Aisialdia</span></a><br>
+      <a href="eventos_eu.html"><span class="lang-es">Eventos</span><span class="lang-eu">Ekitaldiak</span></a><br>
+      <a href="contacto_eu.html"><span class="lang-es">Contacto</span><span class="lang-eu">Kontaktua</span></a>
+    </div>
+    <div class="footer-col">
+      <h4 class="lang-es">Contacto</h4>
+      <h4 class="lang-eu">Kontaktua</h4>
+      <p>turismoa@erandio.eus</p>
+      <p>+34 944 52 10 00</p>
+    </div>
+    <div class="footer-col">
+      <h4 class="lang-es">Ayuntamiento de Erandio</h4>
+      <h4 class="lang-eu">Erandioko Udala</h4>
+      <a href="https://www.erandio.eus" target="_blank" rel="noopener">erandio.eus</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 Erandio Turismo. <span class="lang-es">Todos los derechos reservados.</span><span class="lang-eu">Eskubide guztiak erreserbatuta.</span></p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var cat = params.get('cat') || 'patrimonio';
+  var navMap = {
+    patrimonio: { es: 'patrimonio.html', eu: 'patrimonio_eu.html' },
+    rutas: { es: 'rutas.html', eu: 'rutas_eu.html' },
+    'donde-comer': { es: 'donde-comer.html', eu: 'donde-comer_eu.html' },
+    'donde-dormir': { es: 'donde-dormir.html', eu: 'donde-dormir_eu.html' },
+    'donde-comprar': { es: 'donde-comprar.html', eu: 'donde-comprar_eu.html' },
+    eventos: { es: 'eventos.html', eu: 'eventos_eu.html' },
+    fiestas: { es: 'ocio.html', eu: 'ocio_eu.html' }
+  };
+  var link = navMap[cat];
+  if (link) {
+    document.querySelectorAll('nav a').forEach(function (a) {
+      if (a.getAttribute('href') === link.es || a.getAttribute('href') === link.eu) {
+        a.classList.add('active');
+      }
+    });
+  }
+  var titleMap = {
+    patrimonio: { es: 'Patrimonio', eu: 'Ondarea' },
+    rutas: { es: 'Rutas y planes', eu: 'Ibilbideak eta planak' },
+    'donde-comer': { es: 'Dónde comer', eu: 'Non jan' },
+    'donde-dormir': { es: 'Dónde dormir', eu: 'Non lo egin' },
+    'donde-comprar': { es: 'Dónde comprar', eu: 'Non erosi' },
+    eventos: { es: 'Eventos', eu: 'Ekitaldiak' },
+    fiestas: { es: 'Ocio', eu: 'Aisialdia' }
+  };
+  var t = titleMap[cat];
+  if (t) {
+    document.title = 'Erandio Turismo - ' + t.eu;
+  }
+})();
+</script>
+</body>
+</html>

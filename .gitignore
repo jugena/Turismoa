@@ -1,16 +1,15 @@
-﻿# OS files
+# OS files
 Thumbs.db
 .DS_Store
 *.swp
 *.swo
 
-# Python http server
-*.pyc
-__pycache__/
+# Runtime files
 *.pid
+data/*.lock
+img/uploads/
+uploads/gpx/
 
 # IDE
 .vscode/
 .idea/
-
-# trigger pages rebuild

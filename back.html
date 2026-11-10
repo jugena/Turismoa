@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <style>
 /* ===== BACKOFFICE SPECIFIC STYLES ===== */
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -372,6 +373,14 @@ table tr.row-hidden td { opacity: 0.45; background: #fafafa; }
 }
 .editor-content:focus { box-shadow: inset 0 0 0 2px rgba(0,34,68,0.05); }
 .editor-sm .editor-content.editor-sm { min-height: 80px; }
+.quill-editor .ql-editor { min-height: 210px; font-family: var(--font); font-size: 0.95rem; line-height: 1.65; }
+.quill-editor.editor-sm .ql-editor { min-height: 110px; }
+.editor-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 7px; }
+.editor-heading label { margin: 0; }
+.html-source-btn { border: 1px solid var(--border); background: white; color: var(--primary); border-radius: 5px; padding: 5px 9px; cursor: pointer; font: 600 0.75rem var(--font); }
+.html-source-btn:hover { background: var(--bg); }
+.admin-global-notice { position: fixed; right: 24px; bottom: 24px; z-index: 3000; max-width: 440px; padding: 14px 18px; border-radius: 8px; color: white; background: #2e7d32; box-shadow: 0 8px 30px rgba(0,0,0,.22); }
+.admin-global-notice.is-error { background: #b3261e; }
 
 /* Image Upload */
 .image-upload-area {
@@ -466,10 +475,6 @@ table tr.row-hidden td { opacity: 0.45; background: #fafafa; }
     <h1>Backoffice</h1>
     <p>Erandio Turismo - Gestión de contenidos</p>
     <div class="form-group">
-      <label>Usuario</label>
-      <input type="text" id="login-user" placeholder="Admin" autocomplete="off">
-    </div>
-    <div class="form-group">
       <label>Contraseña</label>
       <input type="password" id="login-pass" placeholder="••••••••">
     </div>
@@ -484,7 +489,6 @@ table tr.row-hidden td { opacity: 0.45; background: #fafafa; }
     <h2>Backoffice <span>Erandio Turismo</span></h2>
     <div class="dash-actions">
       <a href="index.html" class="back-link">Ver sitio web</a>
-      <button onclick="backApp.loadSampleData()">Cargar datos de muestra</button>
       <button class="btn-danger" onclick="backApp.logout()">Cerrar sesión</button>
     </div>
   </header>
@@ -637,91 +641,23 @@ table tr.row-hidden td { opacity: 0.45; background: #fafafa; }
         </div>
 
         <div class="full">
-          <label>Resumen (Castellano)</label>
-          <div class="editor-wrap editor-sm">
-            <div class="editor-toolbar" id="toolbar-resumen-es">
-              <button class="editor-btn" data-cmd="bold" title="Negrita"><b>B</b></button>
-              <button class="editor-btn" data-cmd="italic" title="Cursiva"><i>I</i></button>
-              <button class="editor-btn" data-cmd="underline" title="Subrayado"><u>U</u></button>
-              <button class="editor-btn sep" data-cmd="createLink" title="Enlace">🔗</button>
-              <button class="editor-btn editor-img-btn" data-cmd="insertImage" title="Insertar imagen">🖼️</button>
-              <button class="editor-btn editor-html-btn" data-cmd="toggleHtml" title="Ver HTML">&lt;/&gt;</button>
-              <input type="file" class="editor-img-input" accept="image/*" style="display:none">
-            </div>
-            <div class="editor-content editor-sm" id="editor-resumen-es" contenteditable="true"></div>
-            <textarea class="editor-html-view" style="display:none;width:100%;min-height:80px;padding:10px;border:none;font-family:monospace;font-size:0.85rem;resize:vertical" id="html-resumen-es"></textarea>
-          </div>
+          <div class="editor-heading"><label>Resumen (Castellano)</label><button type="button" class="html-source-btn" onclick="backApp.openHtmlEditor('editor-resumen-es')">&lt;&gt; HTML</button></div>
+          <div class="quill-editor editor-sm" id="editor-resumen-es"></div>
         </div>
 
         <div class="full">
-          <label>Laburpena (Euskara)</label>
-          <div class="editor-wrap editor-sm">
-            <div class="editor-toolbar" id="toolbar-resumen-eu">
-              <button class="editor-btn" data-cmd="bold" title="Lodia"><b>B</b></button>
-              <button class="editor-btn" data-cmd="italic" title="Etzana"><i>I</i></button>
-              <button class="editor-btn" data-cmd="underline" title="Azpimarra"><u>U</u></button>
-              <button class="editor-btn sep" data-cmd="createLink" title="Esteka">🔗</button>
-              <button class="editor-btn editor-img-btn" data-cmd="insertImage" title="Irudia txertatu">🖼️</button>
-              <button class="editor-btn editor-html-btn" data-cmd="toggleHtml" title="HTML ikusi">&lt;/&gt;</button>
-              <input type="file" class="editor-img-input" accept="image/*" style="display:none">
-            </div>
-            <div class="editor-content editor-sm" id="editor-resumen-eu" contenteditable="true"></div>
-            <textarea class="editor-html-view" style="display:none;width:100%;min-height:80px;padding:10px;border:none;font-family:monospace;font-size:0.85rem;resize:vertical" id="html-resumen-eu"></textarea>
-          </div>
+          <div class="editor-heading"><label>Laburpena (Euskara)</label><button type="button" class="html-source-btn" onclick="backApp.openHtmlEditor('editor-resumen-eu')">&lt;&gt; HTML</button></div>
+          <div class="quill-editor editor-sm" id="editor-resumen-eu"></div>
         </div>
 
         <div class="full">
-          <label>Contenido completo (Castellano)</label>
-          <div class="editor-wrap">
-            <div class="editor-toolbar" id="toolbar-es">
-              <button class="editor-btn" data-cmd="bold" title="Negrita"><b>B</b></button>
-              <button class="editor-btn" data-cmd="italic" title="Cursiva"><i>I</i></button>
-              <button class="editor-btn" data-cmd="underline" title="Subrayado"><u>U</u></button>
-              <button class="editor-btn sep" data-cmd="formatBlock" data-value="h2" title="Título grande">H2</button>
-              <button class="editor-btn" data-cmd="formatBlock" data-value="h3" title="Título">H3</button>
-              <button class="editor-btn" data-cmd="formatBlock" data-value="h4" title="Título pequeño">H4</button>
-              <button class="editor-btn" data-cmd="formatBlock" data-value="p" title="Párrafo">¶</button>
-              <button class="editor-btn sep" data-cmd="insertUnorderedList" title="Lista">• Lista</button>
-              <button class="editor-btn" data-cmd="insertOrderedList" title="Ordenada">1. Lista</button>
-              <button class="editor-btn sep" data-cmd="formatBlock" data-value="blockquote" title="Cita">❝</button>
-              <button class="editor-btn" data-cmd="justifyLeft" title="Alinear izquierda">⫷</button>
-              <button class="editor-btn" data-cmd="justifyCenter" title="Centrar">⫿</button>
-              <button class="editor-btn" data-cmd="justifyRight" title="Alinear derecha">⫸</button>
-              <button class="editor-btn sep" data-cmd="createLink" title="Enlace">🔗</button>
-              <button class="editor-btn editor-img-btn" data-cmd="insertImage" title="Insertar imagen">🖼️</button>
-              <button class="editor-btn editor-html-btn" data-cmd="toggleHtml" title="Ver HTML">&lt;/&gt;</button>
-              <input type="file" class="editor-img-input" accept="image/*" style="display:none">
-            </div>
-            <div class="editor-content" id="editor-es" contenteditable="true"></div>
-            <textarea class="editor-html-view" style="display:none;width:100%;min-height:150px;padding:10px;border:none;font-family:monospace;font-size:0.85rem;resize:vertical" id="html-es"></textarea>
-          </div>
+          <div class="editor-heading"><label>Contenido completo (Castellano)</label><button type="button" class="html-source-btn" onclick="backApp.openHtmlEditor('editor-es')">&lt;&gt; HTML</button></div>
+          <div class="quill-editor" id="editor-es"></div>
         </div>
 
         <div class="full">
-          <label>Eduki osoa (Euskara)</label>
-          <div class="editor-wrap">
-            <div class="editor-toolbar" id="toolbar-eu">
-              <button class="editor-btn" data-cmd="bold" title="Lodia"><b>B</b></button>
-              <button class="editor-btn" data-cmd="italic" title="Etzana"><i>I</i></button>
-              <button class="editor-btn" data-cmd="underline" title="Azpimarra"><u>U</u></button>
-              <button class="editor-btn sep" data-cmd="formatBlock" data-value="h2" title="Izenburu handia">H2</button>
-              <button class="editor-btn" data-cmd="formatBlock" data-value="h3" title="Izenburua">H3</button>
-              <button class="editor-btn" data-cmd="formatBlock" data-value="h4" title="Izenburu txikia">H4</button>
-              <button class="editor-btn" data-cmd="formatBlock" data-value="p" title="Paragrafoa">¶</button>
-              <button class="editor-btn sep" data-cmd="insertUnorderedList" title="Zerrenda">• Zerrenda</button>
-              <button class="editor-btn" data-cmd="insertOrderedList" title="Ordenatua">1. Zerrenda</button>
-              <button class="editor-btn sep" data-cmd="formatBlock" data-value="blockquote" title="Aipua">❝</button>
-              <button class="editor-btn" data-cmd="justifyLeft" title="Ezkerrean lerrokatu">⫷</button>
-              <button class="editor-btn" data-cmd="justifyCenter" title="Erdian jarri">⫿</button>
-              <button class="editor-btn" data-cmd="justifyRight" title="Eskuinean lerrokatu">⫸</button>
-              <button class="editor-btn sep" data-cmd="createLink" title="Esteka">🔗</button>
-              <button class="editor-btn editor-img-btn" data-cmd="insertImage" title="Irudia txertatu">🖼️</button>
-              <button class="editor-btn editor-html-btn" data-cmd="toggleHtml" title="HTML ikusi">&lt;/&gt;</button>
-              <input type="file" class="editor-img-input" accept="image/*" style="display:none">
-            </div>
-            <div class="editor-content" id="editor-eu" contenteditable="true"></div>
-            <textarea class="editor-html-view" style="display:none;width:100%;min-height:150px;padding:10px;border:none;font-family:monospace;font-size:0.85rem;resize:vertical" id="html-eu"></textarea>
-          </div>
+          <div class="editor-heading"><label>Eduki osoa (Euskara)</label><button type="button" class="html-source-btn" onclick="backApp.openHtmlEditor('editor-eu')">&lt;&gt; HTML</button></div>
+          <div class="quill-editor" id="editor-eu"></div>
         </div>
 
         <div class="full">
@@ -742,6 +678,7 @@ table tr.row-hidden td { opacity: 0.45; background: #fafafa; }
   </div>
 </div>
 
+<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 <script src="js/back.js"></script>
 </body>
 </html>
