@@ -68,19 +68,19 @@ img {
   display: none;
 }
 
-body.lang-eu .lang-es {
+body.site-lang-eu .lang-es {
   display: none;
 }
 
-body.lang-eu .lang-eu {
+body.site-lang-eu .lang-eu {
   display: inline;
 }
 
-body.lang-eu .section-title-es {
+body.site-lang-eu .section-title-es {
   display: none;
 }
 
-body.lang-eu .section-title-eu {
+body.site-lang-eu .section-title-eu {
   display: block;
 }
 
@@ -88,15 +88,15 @@ body.lang-eu .section-title-eu {
   display: none;
 }
 
-body.lang-eu .section-title-eu {
+body.site-lang-eu .section-title-eu {
   display: block;
 }
 
-body.lang-eu .card-content-es {
+body.site-lang-eu .card-content-es {
   display: none;
 }
 
-body.lang-eu .card-content-eu {
+body.site-lang-eu .card-content-eu {
   display: block;
 }
 

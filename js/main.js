@@ -13,8 +13,8 @@
     currentLang = lang;
     window.currentLang = lang;
     localStorage.setItem('erandio_lang', lang);
-    document.body.classList.remove('lang-es', 'lang-eu');
-    document.body.classList.add('lang-' + lang);
+    document.body.classList.remove('site-lang-es', 'site-lang-eu');
+    document.body.classList.add('site-lang-' + lang);
     document.querySelectorAll('.lang-btn').forEach(function (btn) {
       btn.classList.toggle('active', btn.dataset.lang === lang);
     });
