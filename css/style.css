@@ -854,6 +854,60 @@ body.site-lang-eu .hero-slider .slide-content .hero-btn.lang-eu {
   margin-bottom: 32px;
 }
 
+.detalle-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.detalle-title-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.detalle-pdf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  flex: 0 0 auto;
+  padding: 12px 20px;
+  border: 1px solid var(--primary);
+  border-radius: 999px;
+  background: var(--primary);
+  color: white;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 650;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: transform var(--transition), background var(--transition), box-shadow var(--transition);
+}
+
+.detalle-pdf-btn svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.detalle-pdf-btn:hover {
+  background: var(--primary-light);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.detalle-pdf-btn:disabled {
+  opacity: 0.65;
+  cursor: wait;
+  transform: none;
+}
+
 .detalle-header h1 {
   font-size: 2.5rem;
   font-weight: 800;
@@ -987,6 +1041,8 @@ body.site-lang-eu .hero-slider .slide-content .hero-btn.lang-eu {
 @media (max-width: 768px) {
   .carousel-track img { height: 300px; }
   .carousel-btn { width: 36px; height: 36px; font-size: 1rem; }
+  .detalle-title-row { flex-direction: column; gap: 18px; }
+  .detalle-pdf-btn { width: 100%; }
 }
 
 .detalle-image {

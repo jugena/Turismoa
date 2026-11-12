@@ -308,6 +308,281 @@
     return items.find(function (i) { return String(i.id) === String(id); }) || null;
   }
 
+  function richHtmlToText(value) {
+    var holder = document.createElement('div');
+    holder.innerHTML = String(value || '');
+    holder.querySelectorAll('br').forEach(function (node) {
+      node.replaceWith(document.createTextNode('\n'));
+    });
+    holder.querySelectorAll('li').forEach(function (node) {
+      node.insertBefore(document.createTextNode('- '), node.firstChild);
+      node.appendChild(document.createTextNode('\n'));
+    });
+    holder.querySelectorAll('p, div, h1, h2, h3, h4, blockquote').forEach(function (node) {
+      node.appendChild(document.createTextNode('\n'));
+    });
+    return (holder.textContent || '')
+      .replace(/\u00a0/g, ' ')
+      .replace(/[ \t]+\n/g, '\n')
+      .replace(/\n{3,}/g, '\n\n')
+      .trim();
+  }
+
+  function pdfFileName(title) {
+    var clean = String(title || 'ficha-erandio')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-zA-Z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .toLowerCase();
+    return (clean || 'ficha-erandio') + '.pdf';
+  }
+
+  function loadPdfImage(src) {
+    return new Promise(function (resolve, reject) {
+      var image = new Image();
+      image.onload = function () {
+        try {
+          var maxDimension = 1400;
+          var scale = Math.min(1, maxDimension / Math.max(image.naturalWidth, image.naturalHeight));
+          var width = Math.max(1, Math.round(image.naturalWidth * scale));
+          var height = Math.max(1, Math.round(image.naturalHeight * scale));
+          var canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          var context = canvas.getContext('2d');
+          context.fillStyle = '#ffffff';
+          context.fillRect(0, 0, width, height);
+          context.drawImage(image, 0, 0, width, height);
+          resolve({
+            data: canvas.toDataURL('image/jpeg', 0.9),
+            width: width,
+            height: height
+          });
+        } catch (error) {
+          reject(error);
+        }
+      };
+      image.onerror = function () { reject(new Error('image_load_failed')); };
+      image.src = src;
+    });
+  }
+
+  async function downloadContentPdf(item, category, lang, button) {
+    if (!window.jspdf || !window.jspdf.jsPDF) {
+      throw new Error('pdf_library_unavailable');
+    }
+
+    var originalText = button.querySelector('span').textContent;
+    var busyText = lang === 'eu' ? 'PDFa sortzen...' : 'Generando PDF...';
+    button.disabled = true;
+    button.setAttribute('aria-busy', 'true');
+    button.querySelector('span').textContent = busyText;
+
+    try {
+      var suffix = lang === 'eu' ? '_eu' : '_es';
+      var title = item['title' + suffix] || item.title_es || 'Erandio Turismo';
+      var subtitle = item['subtitle' + suffix] || '';
+      var resumen = richHtmlToText(item['resumen' + suffix] || item.resumen_es || '');
+      var contentFull = richHtmlToText(item['content' + suffix] || item.content_es || '');
+      var sources = item['sources' + suffix] || item.sources_es || [];
+      var categoryLabels = {
+        patrimonio: { es: 'Patrimonio', eu: 'Ondarea' },
+        rutas: { es: 'Rutas y planes', eu: 'Ibilbideak eta planak' },
+        'donde-comer': { es: 'Dónde comer', eu: 'Non jan' },
+        'donde-dormir': { es: 'Dónde dormir', eu: 'Non lo egin' },
+        'donde-comprar': { es: 'Dónde comprar', eu: 'Non erosi' },
+        eventos: { es: 'Eventos', eu: 'Ekitaldiak' },
+        fiestas: { es: 'Fiestas', eu: 'Jaiak' }
+      };
+      var categoryLabel = categoryLabels[category] ? categoryLabels[category][lang] : category;
+      var PdfConstructor = window.jspdf.jsPDF;
+      var pdf = new PdfConstructor({ orientation: 'portrait', unit: 'mm', format: 'a4', compress: true });
+      var pageWidth = pdf.internal.pageSize.getWidth();
+      var pageHeight = pdf.internal.pageSize.getHeight();
+      var margin = 18;
+      var contentWidth = pageWidth - (margin * 2);
+      var y = 0;
+
+      function startPage(isFirstPage) {
+        pdf.setFillColor(0, 34, 68);
+        if (!isFirstPage) {
+          pdf.rect(0, 0, pageWidth, 5, 'F');
+          pdf.setTextColor(40, 50, 60);
+          y = 16;
+          return;
+        }
+        pdf.rect(0, 0, pageWidth, 21, 'F');
+        pdf.setTextColor(255, 255, 255);
+        pdf.setFont('helvetica', 'bold');
+        pdf.setFontSize(12);
+        pdf.text('ERANDIO TURISMO', margin, 13);
+        pdf.setFont('helvetica', 'normal');
+        pdf.setFontSize(9);
+        pdf.text(String(categoryLabel || ''), pageWidth - margin, 13, { align: 'right' });
+        pdf.setTextColor(40, 50, 60);
+        y = 32;
+      }
+
+      function ensureSpace(required) {
+        if (y + required <= pageHeight - 20) return;
+        pdf.addPage();
+        startPage(false);
+      }
+
+      function addText(text, options) {
+        var settings = options || {};
+        var clean = String(text || '').trim();
+        if (!clean) return;
+        var fontSize = settings.fontSize || 10.5;
+        var lineHeight = settings.lineHeight || 5.2;
+        var after = settings.after === undefined ? 4 : settings.after;
+        pdf.setFont('helvetica', settings.bold ? 'bold' : 'normal');
+        pdf.setFontSize(fontSize);
+        pdf.setTextColor(settings.color || 51, settings.color || 51, settings.color || 51);
+        var lines = pdf.splitTextToSize(clean, settings.width || contentWidth);
+        lines.forEach(function (line) {
+          ensureSpace(lineHeight + 1);
+          pdf.text(line, settings.x || margin, y);
+          y += lineHeight;
+        });
+        y += after;
+      }
+
+      function addSectionTitle(text) {
+        ensureSpace(12);
+        pdf.setFillColor(201, 168, 76);
+        pdf.rect(margin, y - 3.5, 2, 7, 'F');
+        pdf.setTextColor(0, 34, 68);
+        pdf.setFont('helvetica', 'bold');
+        pdf.setFontSize(13);
+        pdf.text(text, margin + 6, y + 1);
+        y += 10;
+      }
+
+      startPage(true);
+      pdf.setTextColor(0, 34, 68);
+      pdf.setFont('helvetica', 'bold');
+      pdf.setFontSize(22);
+      var titleLines = pdf.splitTextToSize(title, contentWidth);
+      titleLines.forEach(function (line) {
+        pdf.text(line, margin, y);
+        y += 9;
+      });
+      pdf.setFillColor(201, 168, 76);
+      pdf.rect(margin, y + 1, 28, 1.2, 'F');
+      y += 8;
+
+      if (subtitle) {
+        addText(subtitle, { fontSize: 12, lineHeight: 6, after: 5, color: 102 });
+      }
+
+      var images = item.images && item.images.length ? item.images : (item.image ? [item.image] : []);
+      if (images.length) {
+        try {
+          var pdfImage = await loadPdfImage(resolveMediaPath(images[0]));
+          var imageWidth = contentWidth;
+          var imageHeight = imageWidth * pdfImage.height / pdfImage.width;
+          if (imageHeight > 82) {
+            imageHeight = 82;
+            imageWidth = imageHeight * pdfImage.width / pdfImage.height;
+          }
+          ensureSpace(imageHeight + 8);
+          pdf.addImage(pdfImage.data, 'JPEG', margin, y, imageWidth, imageHeight, undefined, 'FAST');
+          y += imageHeight + 8;
+        } catch (imageError) {
+          console.warn('No se ha podido incluir la imagen en el PDF.', imageError);
+        }
+      }
+
+      var metaFields = [
+        { es: 'Siglo', eu: 'Mendea', value: item['siglo' + suffix] || item.siglo_es },
+        { es: 'Estilo', eu: 'Estiloa', value: item['estilo' + suffix] || item.estilo_es },
+        { es: 'Localización', eu: 'Kokapena', value: item['localizacion' + suffix] || item.localizacion_es },
+        { es: 'Ruta', eu: 'Ibilbidea', value: item['ruta' + suffix] || item.ruta_es }
+      ];
+      var metaText = metaFields.filter(function (field) { return field.value; }).map(function (field) {
+        return field[lang] + ': ' + richHtmlToText(field.value);
+      }).join(' | ');
+      if (metaText) {
+        var metaLines = pdf.splitTextToSize(metaText, contentWidth - 10);
+        var metaHeight = (metaLines.length * 5) + 7;
+        ensureSpace(metaHeight + 5);
+        pdf.setFillColor(245, 245, 240);
+        pdf.roundedRect(margin, y, contentWidth, metaHeight, 2, 2, 'F');
+        pdf.setTextColor(0, 34, 68);
+        pdf.setFont('helvetica', 'normal');
+        pdf.setFontSize(9.5);
+        pdf.text(metaLines, margin + 5, y + 6);
+        y += metaHeight + 7;
+      }
+
+      if (resumen) {
+        addSectionTitle(lang === 'eu' ? 'Laburpena' : 'Resumen');
+        addText(resumen);
+      }
+      if (contentFull) {
+        addSectionTitle(lang === 'eu' ? 'Informazio xehatua' : 'Información detallada');
+        addText(contentFull);
+      }
+
+      var mapLink = item.mapa_data || '';
+      if (!mapLink && item.mapa_embed) {
+        var mapHolder = document.createElement('div');
+        mapHolder.innerHTML = item.mapa_embed;
+        var mapFrame = mapHolder.querySelector('iframe');
+        mapLink = mapFrame ? (mapFrame.getAttribute('src') || '') : '';
+      }
+      if (mapLink) {
+        addSectionTitle(lang === 'eu' ? 'Mapa eta fitxategiak' : 'Mapa y archivos');
+        addText(mapLink, { fontSize: 9, lineHeight: 4.7, color: 70 });
+      }
+
+      if (Array.isArray(sources) && sources.length) {
+        addSectionTitle(lang === 'eu' ? 'Iturriak' : 'Fuentes');
+        sources.forEach(function (source) {
+          addText('- ' + richHtmlToText(source), { fontSize: 9.5, lineHeight: 4.8, after: 1 });
+        });
+      }
+
+      var totalPages = pdf.internal.getNumberOfPages();
+      for (var pageNumber = 1; pageNumber <= totalPages; pageNumber += 1) {
+        pdf.setPage(pageNumber);
+        pdf.setFillColor(0, 34, 68);
+        if (pageNumber === 1) {
+          pdf.rect(0, 0, pageWidth, 21, 'F');
+          pdf.setTextColor(255, 255, 255);
+          pdf.setFont('helvetica', 'bold');
+          pdf.setFontSize(12);
+          pdf.text('ERANDIO TURISMO', margin, 13);
+          pdf.setFont('helvetica', 'normal');
+          pdf.setFontSize(9);
+          pdf.text(String(categoryLabel || ''), pageWidth - margin, 13, { align: 'right' });
+        } else {
+          pdf.rect(0, 0, pageWidth, 5, 'F');
+        }
+        pdf.setDrawColor(220, 220, 220);
+        pdf.line(margin, pageHeight - 14, pageWidth - margin, pageHeight - 14);
+        pdf.setTextColor(110, 110, 110);
+        pdf.setFont('helvetica', 'normal');
+        pdf.setFontSize(8);
+        pdf.text('Erandio Turismo', margin, pageHeight - 8);
+        pdf.text(pageNumber + ' / ' + totalPages, pageWidth - margin, pageHeight - 8, { align: 'right' });
+      }
+      pdf.setProperties({
+        title: title,
+        subject: categoryLabel,
+        author: 'Erandio Turismo',
+        creator: 'Erandio Turismo'
+      });
+      pdf.save(pdfFileName(title));
+    } finally {
+      button.disabled = false;
+      button.removeAttribute('aria-busy');
+      button.querySelector('span').textContent = originalText;
+    }
+  }
+
   // ===== RENDER DETALLE PAGE (generic, any category) =====
   function renderDetalle() {
     var container = document.getElementById('detalle-content');
@@ -408,6 +683,10 @@
     }
 
     var subtitleHtml = subtitle ? '<p class="detalle-subtitle">' + escapeHtml(subtitle) + '</p>' : '';
+    var pdfLabel = lang === 'eu' ? 'PDF fitxa deskargatu' : 'Descargar ficha PDF';
+    var pdfButtonHtml = '<button type="button" class="detalle-pdf-btn" id="detalle-pdf-btn" aria-label="' + escapeHtml(pdfLabel) + '">' +
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6V2zm8 2v5h4M9 14h6M9 18h6M9 10h2"/></svg>' +
+      '<span>' + escapeHtml(pdfLabel) + '</span></button>';
 
     // Mapa embed
     var mapaHtml = '';
@@ -422,14 +701,25 @@
 
     container.innerHTML =
       '<div class="detalle-header">' +
-      '<h1>' + escapeHtml(title) + '</h1>' +
-      subtitleHtml +
+      '<div class="detalle-title-row"><div class="detalle-title-copy">' +
+      '<h1>' + escapeHtml(title) + '</h1>' + subtitleHtml +
+      '</div>' + pdfButtonHtml + '</div>' +
       '<div class="detalle-meta">' + metaHtml + '</div>' +
       '</div>' +
       imgHtml +
       mapaHtml +
       '<div class="detalle-body">' + resolveRichHtml(resumen) + (contentFull ? '<hr class="detalle-divider"><div class="detalle-content-full">' + resolveRichHtml(contentFull) + '</div>' : '') + '</div>' +
       sourcesHtml;
+
+    var pdfButton = document.getElementById('detalle-pdf-btn');
+    if (pdfButton) {
+      pdfButton.addEventListener('click', function () {
+        downloadContentPdf(item, cat, lang, pdfButton).catch(function (error) {
+          console.error(error);
+          window.alert(lang === 'eu' ? 'Ezin izan da PDF fitxa sortu.' : 'No se ha podido generar la ficha PDF.');
+        });
+      });
+    }
   }
 
   // ===== CAROUSEL INIT =====

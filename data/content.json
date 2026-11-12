@@ -102,7 +102,13 @@
             "image": "img/patrimonio/Iglesia Andra Mari.jpg",
             "visible": true,
             "created": "2026-06-25T00:00:00Z",
-            "updated": "2026-06-25T00:00:00Z"
+            "updated": "2026-11-12T06:21:28.425Z",
+            "content_eu": "",
+            "mapa_embed": "",
+            "mapa_data": "",
+            "images": [
+                "img/patrimonio/Iglesia Andra Mari.jpg"
+            ]
         },
         {
             "id": 2,
@@ -321,6 +327,24 @@
             "updated": "2026-11-10T13:02:39.573Z",
             "resumen_es": "<p>Acogedor alojamiento rural con impresionantes vistas al valle. Ideal para escapadas románticas.</p>",
             "resumen_eu": "<p>Landako ostatu atsegina, haranaren bista ikusgarriekin. Ihesaldi erromantikoetarako aproposa.</p>"
+        },
+        {
+            "id": 1794478642052,
+            "title_es": "patata",
+            "title_eu": "Bilbao Nature Aston Rentals (kopia)",
+            "content_es": "",
+            "content_eu": "",
+            "image": "img/donde-dormir/Bilbao Nature Aston Rentals.jpg",
+            "visible": true,
+            "created": "2026-11-12T10:17:22.052Z",
+            "updated": "2026-11-12T10:17:41.516Z",
+            "resumen_es": "<p>Alojamiento rural con encanto, rodeado de naturaleza. Habitaciones amplias y confortables con vistas espectaculares.</p>",
+            "resumen_eu": "<p>Naturaz inguratutako landa-ostatu xarmagarria. Gela zabal eta erosoak, bista ikusgarriekin.</p>",
+            "mapa_embed": "",
+            "mapa_data": "",
+            "images": [
+                "img/donde-dormir/Bilbao Nature Aston Rentals.jpg"
+            ]
         }
     ],
     "donde-comprar": [
@@ -428,7 +452,7 @@
             "image": "",
             "visible": true,
             "created": "2026-11-10T13:02:39.573Z",
-            "updated": "2026-11-10T13:02:39.573Z",
+            "updated": "2026-11-12T10:16:35.772Z",
             "resumen_es": "<p>Fiestas patronales en honor a Andra Mari (septiembre). Conciertos, ferias, deportes rurales y actividades para todos.</p>",
             "resumen_eu": "<p>Andra Mariren omenezko jaiak (iraila). Kontzertuak, feriak, herri kirolak eta guztientzako jarduerak.</p>"
         },
