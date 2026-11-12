@@ -368,9 +368,50 @@
     });
   }
 
+  function createPdfQrCode(text) {
+    return new Promise(function (resolve, reject) {
+      if (!window.QRCode) {
+        reject(new Error('qr_library_unavailable'));
+        return;
+      }
+
+      var holder = document.createElement('div');
+      holder.style.position = 'fixed';
+      holder.style.left = '-10000px';
+      holder.style.top = '-10000px';
+      document.body.appendChild(holder);
+
+      try {
+        new window.QRCode(holder, {
+          text: text,
+          width: 320,
+          height: 320,
+          colorDark: '#002244',
+          colorLight: '#ffffff',
+          correctLevel: window.QRCode.CorrectLevel.M
+        });
+
+        window.setTimeout(function () {
+          var canvas = holder.querySelector('canvas');
+          var image = holder.querySelector('img');
+          var data = canvas ? canvas.toDataURL('image/png') : (image ? image.src : '');
+          holder.remove();
+          if (data) resolve(data);
+          else reject(new Error('qr_generation_failed'));
+        }, 0);
+      } catch (error) {
+        holder.remove();
+        reject(error);
+      }
+    });
+  }
+
   async function downloadContentPdf(item, category, lang, button) {
     if (!window.jspdf || !window.jspdf.jsPDF) {
       throw new Error('pdf_library_unavailable');
+    }
+    if (!window.QRCode) {
+      throw new Error('qr_library_unavailable');
     }
 
     var originalText = button.querySelector('span').textContent;
@@ -396,6 +437,16 @@
         fiestas: { es: 'Fiestas', eu: 'Jaiak' }
       };
       var categoryLabel = categoryLabels[category] ? categoryLabels[category][lang] : category;
+      var siteUrl = 'https://turismoa.erandio.eus';
+      var detailPath = lang === 'eu' ? '/eu/patrimonio-detalle.html' : '/patrimonio-detalle.html';
+      var canonicalUrl = siteUrl + detailPath + '?cat=' + encodeURIComponent(category) + '&id=' + encodeURIComponent(item.id);
+      var logoImage = null;
+      try {
+        logoImage = await loadPdfImage(resolveMediaPath('img/logo-turismoa.png'));
+      } catch (logoError) {
+        console.warn('No se ha podido incluir el logotipo en el PDF.', logoError);
+      }
+      var qrImage = await createPdfQrCode(canonicalUrl);
       var PdfConstructor = window.jspdf.jsPDF;
       var pdf = new PdfConstructor({ orientation: 'portrait', unit: 'mm', format: 'a4', compress: true });
       var pageWidth = pdf.internal.pageSize.getWidth();
@@ -403,6 +454,48 @@
       var margin = 18;
       var contentWidth = pageWidth - (margin * 2);
       var y = 0;
+
+      function drawFirstPageHeader() {
+        pdf.setFillColor(0, 34, 68);
+        pdf.rect(0, 0, pageWidth, 23, 'F');
+
+        if (logoImage) {
+          var logoBoxX = margin;
+          var logoBoxY = 2.5;
+          var logoBoxWidth = 36;
+          var logoBoxHeight = 18;
+          var logoMaxWidth = 28;
+          var logoMaxHeight = 14;
+          var logoWidth = logoMaxWidth;
+          var logoHeight = logoWidth * logoImage.height / logoImage.width;
+          if (logoHeight > logoMaxHeight) {
+            logoHeight = logoMaxHeight;
+            logoWidth = logoHeight * logoImage.width / logoImage.height;
+          }
+          pdf.setFillColor(255, 255, 255);
+          pdf.roundedRect(logoBoxX, logoBoxY, logoBoxWidth, logoBoxHeight, 2, 2, 'F');
+          pdf.addImage(
+            logoImage.data,
+            'JPEG',
+            logoBoxX + ((logoBoxWidth - logoWidth) / 2),
+            logoBoxY + ((logoBoxHeight - logoHeight) / 2),
+            logoWidth,
+            logoHeight,
+            undefined,
+            'FAST'
+          );
+        } else {
+          pdf.setTextColor(255, 255, 255);
+          pdf.setFont('helvetica', 'bold');
+          pdf.setFontSize(12);
+          pdf.text('ERANDIO TURISMO', margin, 14);
+        }
+
+        pdf.setTextColor(255, 255, 255);
+        pdf.setFont('helvetica', 'normal');
+        pdf.setFontSize(9);
+        pdf.text(String(categoryLabel || ''), pageWidth - margin, 14, { align: 'right' });
+      }
 
       function startPage(isFirstPage) {
         pdf.setFillColor(0, 34, 68);
@@ -412,16 +505,9 @@
           y = 16;
           return;
         }
-        pdf.rect(0, 0, pageWidth, 21, 'F');
-        pdf.setTextColor(255, 255, 255);
-        pdf.setFont('helvetica', 'bold');
-        pdf.setFontSize(12);
-        pdf.text('ERANDIO TURISMO', margin, 13);
-        pdf.setFont('helvetica', 'normal');
-        pdf.setFontSize(9);
-        pdf.text(String(categoryLabel || ''), pageWidth - margin, 13, { align: 'right' });
+        drawFirstPageHeader();
         pdf.setTextColor(40, 50, 60);
-        y = 32;
+        y = 35;
       }
 
       function ensureSpace(required) {
@@ -545,19 +631,30 @@
         });
       }
 
+      ensureSpace(43);
+      var qrSectionY = y;
+      pdf.setFillColor(245, 245, 240);
+      pdf.roundedRect(margin, qrSectionY, contentWidth, 38, 2, 2, 'F');
+      pdf.addImage(qrImage, 'PNG', margin + 4, qrSectionY + 4, 30, 30, undefined, 'FAST');
+      pdf.link(margin + 4, qrSectionY + 4, 30, 30, { url: canonicalUrl });
+      pdf.setTextColor(0, 34, 68);
+      pdf.setFont('helvetica', 'bold');
+      pdf.setFontSize(11);
+      pdf.text(lang === 'eu' ? 'Ikusi fitxa webgunean' : 'Consulta esta ficha en la web', margin + 40, qrSectionY + 11);
+      pdf.setTextColor(85, 85, 85);
+      pdf.setFont('helvetica', 'normal');
+      pdf.setFontSize(8.2);
+      var canonicalLines = pdf.splitTextToSize(canonicalUrl, contentWidth - 47);
+      pdf.text(canonicalLines, margin + 40, qrSectionY + 18);
+      pdf.link(margin + 39, qrSectionY + 14, contentWidth - 45, 17, { url: canonicalUrl });
+      y += 43;
+
       var totalPages = pdf.internal.getNumberOfPages();
       for (var pageNumber = 1; pageNumber <= totalPages; pageNumber += 1) {
         pdf.setPage(pageNumber);
         pdf.setFillColor(0, 34, 68);
         if (pageNumber === 1) {
-          pdf.rect(0, 0, pageWidth, 21, 'F');
-          pdf.setTextColor(255, 255, 255);
-          pdf.setFont('helvetica', 'bold');
-          pdf.setFontSize(12);
-          pdf.text('ERANDIO TURISMO', margin, 13);
-          pdf.setFont('helvetica', 'normal');
-          pdf.setFontSize(9);
-          pdf.text(String(categoryLabel || ''), pageWidth - margin, 13, { align: 'right' });
+          drawFirstPageHeader();
         } else {
           pdf.rect(0, 0, pageWidth, 5, 'F');
         }
@@ -566,7 +663,11 @@
         pdf.setTextColor(110, 110, 110);
         pdf.setFont('helvetica', 'normal');
         pdf.setFontSize(8);
-        pdf.text('Erandio Turismo', margin, pageHeight - 8);
+        if (typeof pdf.textWithLink === 'function') {
+          pdf.textWithLink(siteUrl, margin, pageHeight - 8, { url: siteUrl });
+        } else {
+          pdf.text(siteUrl, margin, pageHeight - 8);
+        }
         pdf.text(pageNumber + ' / ' + totalPages, pageWidth - margin, pageHeight - 8, { align: 'right' });
       }
       pdf.setProperties({
