@@ -480,6 +480,19 @@ body.site-lang-eu .card-content-eu {
   cursor: pointer;
 }
 
+/* Los botones del slider deben respetar el idioma activo. */
+.hero-slider .slide-content .hero-btn.lang-eu {
+  display: none;
+}
+
+body.site-lang-eu .hero-slider .slide-content .hero-btn.lang-es {
+  display: none;
+}
+
+body.site-lang-eu .hero-slider .slide-content .hero-btn.lang-eu {
+  display: inline-block;
+}
+
 .hero-slider .slide-content .hero-btn:hover {
   background: var(--accent-hover);
   color: var(--primary-dark);
