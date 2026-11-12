@@ -693,6 +693,11 @@ body.site-lang-eu .card-content-eu {
   padding: 100px 0;
 }
 
+/* Las páginas interiores ya incluyen breadcrumb: reducimos el aire antes del título. */
+.breadcrumb + .section {
+  padding-top: 50px;
+}
+
 .section-alt {
   background: var(--bg-alt);
 }
@@ -1682,6 +1687,7 @@ a.ruta-link:hover .ruta-item {
   .hero { min-height: 70vh; }
 
   .section { padding: 60px 0; }
+  .breadcrumb + .section { padding-top: 30px; }
   .section-header h2 { font-size: 1.7rem; }
 
   .cards-grid { grid-template-columns: 1fr; }
@@ -1700,6 +1706,7 @@ a.ruta-link:hover .ruta-item {
   .logo img { height: 32px; }
   .cards-grid { gap: 20px; }
   .section { padding: 40px 0; }
+  .breadcrumb + .section { padding-top: 20px; }
   .section-header { margin-bottom: 32px; }
   .tabs { flex-direction: column; align-items: center; }
 }
